@@ -59,7 +59,10 @@ public:
 
 	bool ShowFullScreen(bool show, long style = wxFULLSCREEN_ALL) override;
 
-private:
+protected:
+	long m_defaultStyle = wxDEFAULT_FRAME_STYLE;
+
+  private:
 	void OnDropFiles(wxDropFilesEvent& event);
 	static bool IsValidSavestateDropped(const std::string& filepath);
 #ifdef _WIN32
@@ -355,6 +358,8 @@ private:
 	void HandleSignal(wxTimerEvent&);
 
 	bool InitControllers();
+
+	void ToggleBorderless();
 
 	// Event table
 	DECLARE_EVENT_TABLE();

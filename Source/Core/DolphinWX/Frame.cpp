@@ -100,6 +100,7 @@ CRenderFrame::CRenderFrame(wxFrame *parent, wxWindowID id, const wxString &title
 
 	DragAcceptFiles(true);
 	Bind(wxEVT_DROP_FILES, &CRenderFrame::OnDropFiles, this);
+	m_defaultStyle = style;
 }
 
 void CRenderFrame::OnDropFiles(wxDropFilesEvent &event)
@@ -209,7 +210,7 @@ bool CRenderFrame::ShowFullScreen(bool show, long style)
 	if (show && !g_Config.bBorderlessFullscreen)
 	{
 		// OpenGL requires the pop-up style to activate exclusive mode.
-		SetWindowStyle((GetWindowStyle() & ~wxDEFAULT_FRAME_STYLE) | wxPOPUP_WINDOW);
+		SetWindowStyle((GetWindowStyle() ^ m_defaultStyle) | wxPOPUP_WINDOW);
 	}
 #endif
 
@@ -219,7 +220,7 @@ bool CRenderFrame::ShowFullScreen(bool show, long style)
 	if (!show)
 	{
 		// Restore the default style.
-		SetWindowStyle((GetWindowStyle() & ~wxPOPUP_WINDOW) | wxDEFAULT_FRAME_STYLE);
+		SetWindowStyle(m_defaultStyle ^ wxPOPUP_WINDOW);
 	}
 #endif
 
@@ -1256,6 +1257,14 @@ static void RefreshInputConfig() {
 	Core::PauseAndLock(false, was_unpaused);
 }
 
+void CFrame::ToggleBorderless() {
+	if (!IsFullScreen())
+	{
+		m_defaultStyle = m_defaultStyle == wxDEFAULT_FRAME_STYLE ? wxBORDER_NONE : wxDEFAULT_FRAME_STYLE;
+		m_RenderFrame->SetWindowStyle(m_defaultStyle);
+	}
+}
+
 void CFrame::ParseHotkeys()
 {
 	for (int i = 0; i < NUM_HOTKEYS; i++)
@@ -1336,6 +1345,8 @@ void CFrame::ParseHotkeys()
 		wxPostEvent(this, wxCommandEvent(wxEVT_MENU, wxID_EXIT));
 	if (IsHotkey(HK_REFRESH_INPUT_CONFIG))
 		RefreshInputConfig();
+	if (IsHotkey(HK_TOGGLE_BORDERLESS))
+		ToggleBorderless();
 	if (IsHotkey(HK_VOLUME_DOWN))
 		AudioCommon::DecreaseVolume(3);
 	if (IsHotkey(HK_VOLUME_UP))

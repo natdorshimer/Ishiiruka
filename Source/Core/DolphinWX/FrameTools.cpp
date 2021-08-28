@@ -737,7 +737,6 @@ void CFrame::StartGame(const std::string& filename)
 
 	ToggleScreenSaver(false);
 	DoFullscreen(SConfig::GetInstance().bFullscreen);
-
 	if (!BootManager::BootCore(filename))
 	{
 		DoFullscreen(false);
