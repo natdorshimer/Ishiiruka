@@ -200,6 +200,7 @@ void SConfig::SaveDisplaySettings(IniFile &ini)
 
 	display->Set("FullscreenResolution", strFullscreenResolution);
 	display->Set("Fullscreen", bFullscreen);
+	display->Set("BorderlessWindow", bBorderlessWindow);
 	display->Set("RenderToMain", bRenderToMain);
 	display->Set("RenderWindowXPos", iRenderWindowXPos);
 	display->Set("RenderWindowYPos", iRenderWindowYPos);
@@ -533,6 +534,7 @@ void SConfig::LoadDisplaySettings(IniFile &ini)
 #else
 	display->Get("Fullscreen", &bFullscreen, true);
 #endif
+	display->Get("BorderlessWindow", &bBorderlessWindow, true);
 	display->Get("FullscreenResolution", &strFullscreenResolution, "Auto");
 #if defined IS_PLAYBACK && (defined _WIN32 || defined __APPLE__)
 	display->Get("RenderToMain", &bRenderToMain, true);

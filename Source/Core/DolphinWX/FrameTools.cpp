@@ -698,7 +698,9 @@ void CFrame::StartGame(const std::string& filename)
 		// Set window size in framebuffer pixels since the 3D rendering will be operating at
 		// that level.
 		wxSize default_size{ wxSize(640, 480) * (1.0 / GetContentScaleFactor()) };
-		m_RenderFrame = new CRenderFrame(this, wxID_ANY, _("Dolphin"), wxDefaultPosition, default_size);
+
+		long defaultStyle = SConfig::GetInstance().bBorderlessWindow ? wxBORDER_NONE : wxDEFAULT_FRAME_STYLE;
+		m_RenderFrame = new CRenderFrame(this, wxID_ANY, _("Dolphin"), wxDefaultPosition, default_size, defaultStyle);
 
 		// Convert ClientSize coordinates to frame sizes.
 		wxSize decoration_fudge = m_RenderFrame->GetSize() - m_RenderFrame->GetClientSize();

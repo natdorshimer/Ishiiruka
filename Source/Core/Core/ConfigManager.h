@@ -213,6 +213,7 @@ struct SConfig : NonCopyable
 	int iRenderWindowHeight = -1;
 	bool bRenderWindowAutoSize = false, bKeepWindowOnTop = false;
 	bool bFullscreen = false, bRenderToMain = false;
+	bool bBorderlessWindow = true;
 	bool bProgressive = false, bPAL60 = false;
 	bool bDisableScreenSaver = false;
 

@@ -1260,8 +1260,12 @@ static void RefreshInputConfig() {
 void CFrame::ToggleBorderless() {
 	if (!IsFullScreen())
 	{
-		m_defaultStyle = m_defaultStyle == wxDEFAULT_FRAME_STYLE ? wxBORDER_NONE : wxDEFAULT_FRAME_STYLE;
+		SConfig::GetInstance().LoadSettings();
+		bool isBorderless = SConfig::GetInstance().bBorderlessWindow;
+		m_defaultStyle = isBorderless ? wxDEFAULT_FRAME_STYLE : wxBORDER_NONE;
 		m_RenderFrame->SetWindowStyle(m_defaultStyle);
+		SConfig::GetInstance().bBorderlessWindow = !isBorderless;
+		SConfig::GetInstance().SaveSettings();
 	}
 }
 
