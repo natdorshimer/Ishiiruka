@@ -699,7 +699,10 @@ void CFrame::StartGame(const std::string& filename)
 		// that level.
 		wxSize default_size{ wxSize(640, 480) * (1.0 / GetContentScaleFactor()) };
 
-		long defaultStyle = SConfig::GetInstance().bBorderlessWindow ? wxBORDER_NONE : wxDEFAULT_FRAME_STYLE;
+		bool isBorderlessAndNotFullscreen =
+		    SConfig::GetInstance().bBorderlessWindow && !SConfig::GetInstance().bFullscreen;
+		long defaultStyle = isBorderlessAndNotFullscreen ? wxBORDER_NONE : wxDEFAULT_FRAME_STYLE;
+
 		m_RenderFrame = new CRenderFrame(this, wxID_ANY, _("Dolphin"), wxDefaultPosition, default_size, defaultStyle);
 
 		// Convert ClientSize coordinates to frame sizes.

@@ -1258,7 +1258,7 @@ static void RefreshInputConfig() {
 }
 
 void CFrame::ToggleBorderless() {
-	if (!IsFullScreen())
+	if (!RendererIsFullscreen())
 	{
 		SConfig::GetInstance().LoadSettings();
 		auto &isBorderless = SConfig::GetInstance().bBorderlessWindow;
